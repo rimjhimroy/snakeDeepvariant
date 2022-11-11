@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+import pandas as pd
+import glob
+import os
+
+
+configfile: "config.yaml"
+GENOMEBASE = os.path.splitext(config["fasta_ref"])[0]
+
+
+OUTPUTPATH=config["project"]["outputpath"]
+OUTDIR=config["project"]["outdir"]
+# USER=config["REMOTE_USERID"]
+print(OUTPUTPATH)
+
+SCRATCH=config["SCRATCH"]
+TMP=config["tmpdir"]
+
+# Where the fastq files are and where the list of samples are?
+FILE_PATH=config["FILE_PATH"]
+FILES = config["FILES"]
+
+
+samples = []
+with open(FILES, 'rt') as sh:
+    for line in sh:
+        line = line.strip()
+        samples.append(line)
+print(samples)
+# define function to retrieve all the files from input directory
+
+
+
+REFERENCE = config["fasta_ref"]
+SCAFFS = config["SCAFFOLDS"]
+scaffolds = []
+
+if SCAFFS == "ALL":
+    with open(REFERENCE, 'rt') as fh:
+        for line in fh:
+            line = line.strip()
+            if line.startswith(">"):
+                line = line.split(" ")[0]
+                scaffolds.append(line[1:])
+else:
+    with open(SCAFFS, 'rt') as sh:
+        for line in sh:
+            line = line.strip()
+            scaffolds.append(line)
+
+with open("scaffolds.list", "w") as outfile:
+    outfile.write("\n".join(scaffolds))
+
+wildcard_constraints:
+    sample = "|".join(samples),
+    scaffold = "|".join(scaffolds)
+
+
+
+
+include: "rules/0.qc.smk",
+include: "rules/1.fastq2ubam.smk",
+include: "rules/2.mapping.smk",
+include: "rules/3.variantcalling.smk"
+
+
+rule all:
+    input:
+        expand(os.path.join(OUTPUTPATH,"analysis/qc/fastqc/{sample}_1_fastqc.zip"),sample=samples),
+        expand(os.path.join(OUTPUTPATH,"analysis/qc/fastqc/{sample}_1_fastqc.html"),sample=samples),
+        expand(os.path.join(OUTPUTPATH,"analysis/qc/fastqc/{sample}_2_fastqc.zip"),sample=samples),
+        expand(os.path.join(OUTPUTPATH,"analysis/qc/fastqc/{sample}_2_fastqc.html"),sample=samples),
+        # expand(os.path.join(OUTPUTPATH,"analysis/qc/validatebam/{sample}_validate.txt"),sample=samples),
+        expand(os.path.join(OUTPUTPATH,"gvcf_calls/{sample}.g.vcf.gz"),sample=samples)
+
+ 

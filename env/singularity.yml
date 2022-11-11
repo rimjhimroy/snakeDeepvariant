@@ -1,0 +1,7 @@
+name: singularity
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - singularity

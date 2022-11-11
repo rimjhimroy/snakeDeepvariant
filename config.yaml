@@ -1,0 +1,38 @@
+RESOURCES: "/home/rchoudhu/Resources"
+
+fasta_ref: "/home/rchoudhu/Resources/genome/Mus_musculus.GRCm38.dna.primary_assembly.fa"
+
+gtf_ref: "/home/rchoudhu/Resources/genome/Mus_musculus.GRCm38.92.gtf"
+
+star_genome: "/home/rchoudhu/Resources/STARgenome"
+
+Resources:
+  known_snps: "/home/rchoudhu/Resources/vcfs/mouse.dbsnp.vcf.gz"
+  known_indels: "/home/rchoudhu/Resources/vcfs/mgp.v5.indels.vcf.gz"
+
+HaplotypeCaller:
+  minConfidenceForVariantCalling: "20"
+
+project:
+  outputpath: "/scratch/rchoudhu/training/output"
+  outdir: "/scratch/rchoudhu/training/output"
+
+# set SCAFFOLDS as "ALL" if you want to run on all scaffolds :: impliment only if limited number of scaffolds, else split snakemake into multiple jobs :: test it
+# else give a txt file with names of scaffolds (one per line)
+SCAFFOLDS: "ALL"
+
+FILES: "data/files.txt"
+
+FILE_PATH: "/scratch/rchoudhu/training/data/FASTQ"
+
+SCRATCH: "/scratch/rchoudhu/training/scratch/"
+
+suffix: ["_1","_2"]
+
+tmpdir: "/scratch/rchoudhu/training/tmp"
+
+
+fastqc_threads: 28
+bwa_threads: 28
+trim_threads: 28
+deepvariant_threads: 28
