@@ -1,0 +1,82 @@
+{
+    "__default__": {
+      "account": "rchoudhu",
+      "time": "06:00:00",
+      "cpu": 4,
+      "partition": "serial",
+      "mem": "20G",
+      "name": "{rule}",
+      "output": "/scratch/rchoudhu/training/slurm_out/{rule}.out",
+      "error": "/scratch/rchoudhu/training/slurm_out/{rule}.err"
+    },
+    "fastqc": {
+        "cpu": 28,
+        "partition": "parallel",
+        "name": "{rule}.{wildcards.sample}",
+        "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+        "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    },
+    "fastq2ubam":
+    {
+        "name"  : "{rule}.{wildcards.sample}",
+        "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+        "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    },
+    "custom_save_read_group": {
+      "time": "15:00",
+      "mem": "4G",
+      "cpu": 1,
+      "name": "{rule}.{wildcards.sample}",
+      "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+      "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    },
+    "bwamem": {
+      "time": "2-0",
+      "cpu": 28,
+      "partition": "parallel",
+      "name": "{rule}.{wildcards.sample}",
+      "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+      "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    },
+    "MergeBamAlignment": {
+      "time": "6:00:00",
+      "mem": "20G",
+      "cpu": 4,
+      "partition": "serial",
+      "name": "{rule}.{wildcards.sample}",
+      "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+      "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    },
+    "AddOrReplaceReadGroups": {
+      "time": "6:00:00",
+      "mem": "50G",
+      "cpu": 4,
+      "partition": "serial",
+      "name": "{rule}.{wildcards.sample}",
+      "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+      "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    },
+    "validatebam":
+    {   "mem": "100G",
+        "name"  : "{rule}.{wildcards.sample}",
+        "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+        "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    },
+    "MarkDuplicates": {
+      "time": "2-0",
+      "mem": "100G",
+      "cpu": 4,
+      "partition": "serial",
+      "name": "{rule}.{wildcards.sample}",
+      "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+      "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    },
+    "deepvariant_gvcf": {
+      "time": "2-0",
+      "cpu": 28,
+      "partition": "parallel",
+      "name": "{rule}.{wildcards.sample}",
+      "output": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.out",
+      "error": "/scratch/rchoudhu/training/slurm_out/{rule}_{wildcards.sample}.err"
+    }
+}
