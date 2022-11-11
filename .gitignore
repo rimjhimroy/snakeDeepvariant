@@ -1,3 +1,9 @@
 .conda/
 .condarc
 .snakemake/
+.keras/
+data/
+nohup.out
+*.sif
+.parallel/
+

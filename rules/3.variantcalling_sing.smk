@@ -10,13 +10,9 @@ rule deepvariant_gvcf:
         sample="{sample}",
         tmp=config["tmpdir"]
     threads: config["deepvariant_threads"]
-    conda:
-        "../env/singularity.yml"
-    singularity:
-        "docker://google/deepvariant:1.4.0"
     shell:
         """
-        /opt/deepvariant/bin/run_deepvariant --model_type WGS \
+        singularity exec --bind /scratch,/home   deepvariant_140.sif /opt/deepvariant/bin/run_deepvariant --model_type WGS \
         --ref {input.ref} --reads {input.bam} --output_vcf {output.vcf} --output_gvcf {output.gvcf} \
         --num_shards {threads}
         """

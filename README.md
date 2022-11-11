@@ -18,6 +18,8 @@
 **To submit everything in one go:**
 `snakemake -s SnakeDeepVariant -p -j 9999 --immediate-submit --notemp --cluster-config slurm_hpc.json --cluster "./parseJobID.py {dependencies}" --latency-wait 120`
 
+`snakemake -s SnakeDeepVariant -p -j 9999 --immediate-submit --notemp --cluster-config slurm_hpc.json --cluster "./parseJobID.py {dependencies}" --latency-wait 120 --use-singularity --singularity-args "-B /scratch,/home" --use-conda --conda-frontend conda`
+
 **Clean everything:**
 
 `snakemake clean`

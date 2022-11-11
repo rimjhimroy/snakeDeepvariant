@@ -61,7 +61,7 @@ wildcard_constraints:
 include: "rules/0.qc.smk",
 include: "rules/1.fastq2ubam.smk",
 include: "rules/2.mapping.smk",
-include: "rules/3.variantcalling.smk"
+include: "rules/3.variantcalling_sing.smk"
 
 
 rule all:
